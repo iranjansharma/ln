@@ -20,7 +20,7 @@ const Page = () => {
     const canvas = await html2canvas(element, {
       backgroundColor: "#111827",
       scale: 2,
-    });
+    } as any);
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
@@ -52,4 +52,4 @@ const Page = () => {
   );
 };
 
-export default Page; // ✅ Export correct component
+export default Page;
