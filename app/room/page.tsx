@@ -1,10 +1,51 @@
+"use client";
+
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { useRef } from "react";
+
+import Table from "@/components/table";
 import React from "react";
+import Button from "@/components/button";
 
 const page = () => {
+  const tableRef = useRef(null);
+
+  const exportPDF = async () => {
+    const element = tableRef.current;
+
+    // Capture table as canvas
+    const canvas = await html2canvas(element, {
+      backgroundColor: "#111827", // match Tailwind dark bg if needed
+      scale: 2, // higher scale for better quality
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgHeight = (imgProps.height * pageWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
+    pdf.save("table-report.pdf");
+  };
   return (
-    <section className="container mx-auto flex py-40 sm:py-12 md:py-16 lg:py-40 text-center relative overflow-hidden px-4 sm:px-6 lg:px-8 items-center justify-center">
-      <h1>Hello World</h1>
-    </section>
+    <div className="container h-screen mx-auto md:py-20 lg:py-40 relative z-10 text-white">
+      <div className="flex justify-center items-end">
+        <span className="font-bold">
+          Below This Need Form To add And Made POST Request To TABLE API
+        </span>
+      </div>
+      <Table ref={tableRef} />
+      <Button
+        variant="outline"
+        onClick={exportPDF}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Download Pdf
+      </Button>
+    </div>
   );
 };
 
