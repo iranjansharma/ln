@@ -8,16 +8,18 @@ import Table from "@/components/table";
 import React from "react";
 import Button from "@/components/button";
 
-const page = () => {
-  const tableRef = useRef(null);
+const Page = () => {
+  // ✅ Capitalized
+  const tableRef = useRef<HTMLDivElement | null>(null);
 
   const exportPDF = async () => {
+    if (!tableRef.current) return; // ✅ Prevent null reference
     const element = tableRef.current;
 
     // Capture table as canvas
     const canvas = await html2canvas(element, {
-      backgroundColor: "#111827", // match Tailwind dark bg if needed
-      scale: 2, // higher scale for better quality
+      backgroundColor: "#111827",
+      scale: 2,
     });
 
     const imgData = canvas.toDataURL("image/png");
@@ -30,6 +32,7 @@ const page = () => {
     pdf.addImage(imgData, "PNG", 0, 0, pageWidth, imgHeight);
     pdf.save("table-report.pdf");
   };
+
   return (
     <div className="container h-screen mx-auto md:py-20 lg:py-40 relative z-10 text-white">
       <div className="flex justify-center items-end">
@@ -49,4 +52,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page; // ✅ Export correct component
