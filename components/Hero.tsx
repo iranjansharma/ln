@@ -3,7 +3,7 @@ import BlurText from "../gsap-ani/BlurText";
 
 const Hero = () => {
   return (
-    <div className="container h-screen mx-auto md:py-20 lg:py-40 relative z-10">
+    <div className="container h-screen mx-auto py-40 relative z-10">
       <div className="mb-6 sm:mb-8 md:mb-10 flex justify-center">
         <a
           href="https://github.com/iranjansharma"
