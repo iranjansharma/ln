@@ -22,11 +22,13 @@ const products = [
 
 import React from "react";
 
+interface StickyHeaderTableDemoProps {
+  ref?: React.Ref<HTMLDivElement>;
+}
+
 export default function StickyHeaderTableDemo({
   ref,
-}: {
-  ref: React.Ref<HTMLDivElement>;
-}) {
+}: StickyHeaderTableDemoProps) {
   return (
     <div
       ref={ref}
